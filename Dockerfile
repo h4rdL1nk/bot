@@ -21,3 +21,5 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 WORKDIR /var/www/service
 ADD . ./
 RUN composer require botman/botman botman/driver-slack
+
+ENTRYPOINT ["php","init.php"]
