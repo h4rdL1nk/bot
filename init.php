@@ -1,19 +1,27 @@
 <?php
+require 'vendor/autoload.php';
 
-use BotMan\BotMan\BotMan;
+use React\EventLoop\Factory;
 use BotMan\BotMan\BotManFactory;
+use BotMan\BotMan\Drivers\DriverManager;
+use BotMan\Drivers\Slack\SlackRTMDriver;
 
-$config = [
-    // Your driver-specific configuration
-];
+// Load driver
+DriverManager::loadDriver(SlackRTMDriver::class);
 
-// create an instance
-$botman = BotManFactory::create($config);
+$loop = Factory::create();
+$botman = BotManFactory::createForRTM([
+    'slack' => [
+        'token' => 'xoxb-247027687936-pbtMbB5e1XqpDoIlYlqE8ijg',
+    ],
+], $loop);
 
-// give the bot something to listen for.
-$botman->hears('hello', function (BotMan $bot) {
-    $bot->reply('Hello yourself.');
+$botman->hears('keyword', function($bot) {
+    $bot->reply('I heard you! :)');
 });
 
-// start listening
-$botman->listen();
+$botman->hears('convo', function($bot) {
+    $bot->startConversation(new ExampleConversation());
+});
+
+$loop->run();

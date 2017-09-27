@@ -6,7 +6,8 @@ ENV PACKAGES ca-certificates \
              php7-openssl \
              php7-json \
              php7-phar \
-             php7-iconv
+             php7-iconv \
+             php7-zlib
 
 
 RUN apk update \
@@ -19,4 +20,4 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 WORKDIR /var/www/service
 ADD . ./
-RUN composer require botman/botman
+RUN composer require botman/botman botman/driver-slack
