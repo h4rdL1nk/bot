@@ -16,8 +16,8 @@ $botman = BotManFactory::createForRTM([
     ],
 ], $loop);
 
-$botman->hears('keyword', function($bot) {
-    $bot->reply('I heard you! :)');
+$botman->hears('repite {word}', function($bot, $word) {
+    $bot->reply( $word . ' :)' );
 });
 
 $botman->hears('convo', function($bot) {
