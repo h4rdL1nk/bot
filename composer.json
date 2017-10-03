@@ -1,7 +1,7 @@
 {
     "require": {
     	"slim/slim": "2.*",
-        "botman/botman": "*",
-        "botman/driver-slack": "*",
+        "botman/botman": "2.*",
+        "botman/driver-slack": "1.*"
     }
 }
