@@ -3,7 +3,9 @@ FROM alpine:3.6
 ENV PACKAGES ca-certificates \
              tzdata \
              bash \
+             apache2 \
              php7 \
+             php7-apache2 \
              php7-openssl \
              php7-json \
              php7-phar \
