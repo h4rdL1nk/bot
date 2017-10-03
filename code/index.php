@@ -2,7 +2,7 @@
 
 require 'vendor/autoload.php';
 
-$app = new \Slim\App();
+$app = new \Slim\Slim();
 
 $app->group('/api', function ($req, $res, $args) {
 	$this->get('/test', function ($req, $res, $args) {
