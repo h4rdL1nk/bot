@@ -1,5 +1,5 @@
 #!/bin/sh
 
-php init.php &
+php /var/www/service/init.php &
 
 exec "$@"

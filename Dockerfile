@@ -27,7 +27,7 @@ ADD code/ ./
 ADD entrypoint.sh /entrypoint.sh
 RUN composer install \
     && chown -R apache.apache /var/www/service \
-    && chmod +x entrypoint.sh
+    && chmod +x /entrypoint.sh
 
 RUN mkdir -p /run/apache2
 
