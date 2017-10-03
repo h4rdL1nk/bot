@@ -1,3 +1,5 @@
+<?php
+
 $app = new \Slim\App();
 
 $app->group('/api', function ($req, $res, $args) {
