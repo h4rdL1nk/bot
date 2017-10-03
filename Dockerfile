@@ -22,6 +22,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"
 
 ADD . ./
-RUN composer install
+RUN composer install \
+    && chown -R apache.apache /var/www/service
 
-ENTRYPOINT ["php","init.php"]
+CMD ["php","init.php"]
+ENTRYPOINT ["httpd","-D","FOREGROUND"]
