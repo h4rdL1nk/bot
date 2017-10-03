@@ -21,9 +21,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -d memory_limit=16M composer-setup.php --install-dir=/usr/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
-
-RUN composer require botman/botman botman/driver-slack
-
 ADD . ./
+RUN composer install
 
 ENTRYPOINT ["php","init.php"]
