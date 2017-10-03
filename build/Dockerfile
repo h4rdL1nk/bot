@@ -23,12 +23,13 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -d memory_limit=16M composer-setup.php --install-dir=/usr/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
-ADD . ./
+ADD ../ ./
+ADD entypoint.sh /entrypoint.sh
 RUN composer install \
     && chown -R apache.apache /var/www/service \
     && chmod +x entrypoint.sh
 
 RUN mkdir -p /run/apache2
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["httpd","-D","FOREGROUND"]
