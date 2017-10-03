@@ -27,5 +27,7 @@ ADD . ./
 RUN composer install \
     && chown -R apache.apache /var/www/service
 
-CMD ["php","init.php"]
-ENTRYPOINT ["httpd","-D","FOREGROUND"]
+RUN mkdir -p /run/apache2
+
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["httpd","-D","FOREGROUND"]
