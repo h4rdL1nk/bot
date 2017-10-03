@@ -26,6 +26,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 ADD . ./
 RUN composer install \
     && chown -R apache.apache /var/www/service
+    && chmod +x entrypoint.sh
 
 RUN mkdir -p /run/apache2
 
