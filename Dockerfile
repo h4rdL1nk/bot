@@ -24,7 +24,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"
 
 ADD code/ ./
-ADD entypoint.sh /entrypoint.sh
+ADD entrypoint.sh /entrypoint.sh
 RUN composer install \
     && chown -R apache.apache /var/www/service \
     && chmod +x entrypoint.sh
