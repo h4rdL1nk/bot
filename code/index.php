@@ -5,7 +5,6 @@ require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
 $app->get('/util/rand/string', function () {
-
 	$length = 20;
     $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -18,7 +17,6 @@ $app->get('/util/rand/string', function () {
         $str .= $keyspace[random_int(0, $max)];
     }
     echo $str;
-    
 });	
 
 $app->run();
