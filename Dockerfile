@@ -10,7 +10,10 @@ ENV PACKAGES ca-certificates \
              php7-json \
              php7-phar \
              php7-iconv \
-             php7-zlib
+             php7-zlib \
+             php7-dom \
+             php7-tokenizer \
+             php7-mbstring
 
 RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 RUN apk update \
@@ -24,6 +27,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"
 
 ADD code/ ./
+ADD tests/ ./tests
 ADD entrypoint.sh /entrypoint.sh
 ADD conf/httpd/httpd.conf /etc/apache2/
 ADD conf/httpd/service.conf /etc/apache2/conf.d/
