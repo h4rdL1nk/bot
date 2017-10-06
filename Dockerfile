@@ -13,7 +13,9 @@ ENV PACKAGES ca-certificates \
              php7-zlib \
              php7-dom \
              php7-tokenizer \
-             php7-mbstring
+             php7-mbstring \
+             php7-curl \
+             php7-ctype
 
 RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 RUN apk update \
