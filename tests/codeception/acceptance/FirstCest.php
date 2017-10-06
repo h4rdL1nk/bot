@@ -14,7 +14,7 @@ class FirstCest
     // tests
     public function tryToTest(AcceptanceTester $I)
     {
-	$I->amOnPage('/mail/log/6DE78420E3');
-	$I->see('6DE78420E3');
+	$I->amOnPage('/util/rand/string');
+	$I->see('a');
     }
 }
