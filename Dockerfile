@@ -28,6 +28,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -d memory_limit=16M composer-setup.php --install-dir=/usr/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
+RUN ln -s /dev/stdout /var/log/apache2/access.log \
+    ln -s /dev/stderr /var/log/apache2/error.log
+
 ADD code/ ./
 ADD tests/ ./tests
 ADD entrypoint.sh /entrypoint.sh
