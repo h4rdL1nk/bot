@@ -1,0 +1,22 @@
+file:
+  /etc/apache2/conf.d/service.conf:
+    exists: true
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/log/apache2/access.log:
+    exists: true
+  /var/log/apache2/error.log:
+    exists: true
+command:
+  php -i:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  httpd -t:
+    exit-status: 0
+    timeout: 10000
+process:
+  httpd:
+    running: true
