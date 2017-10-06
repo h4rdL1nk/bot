@@ -1,3 +1,4 @@
+
 file:
   /etc/apache2/conf.d/service.conf:
     exists: true
