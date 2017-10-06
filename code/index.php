@@ -7,7 +7,7 @@ $app = new \Slim\Slim();
 $app->get('/util/rand/string', function () {
 
 	$length = 20;
-    $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     $str = '';
     $max = mb_strlen($keyspace, '8bit') - 1;
