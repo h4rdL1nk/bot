@@ -15,6 +15,6 @@ class FirstCest
     public function tryToTest(AcceptanceTester $I)
     {
 	$I->amOnPage('/util/rand/string');
-	$I->see('a');
+	$I->dontSee('ERROR');
     }
 }
