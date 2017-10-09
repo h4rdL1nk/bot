@@ -29,7 +29,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"
 
 RUN ln -s /dev/stdout /var/log/apache2/access.log \
-    ln -s /dev/stderr /var/log/apache2/error.log
+    && ln -s /dev/stderr /var/log/apache2/error.log
 
 ADD code/ ./
 ADD tests/ ./tests
