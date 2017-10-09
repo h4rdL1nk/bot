@@ -18,3 +18,4 @@ class FirstCest
 	$I->dontSee('ERROR');
     }
 }
+
