@@ -20,7 +20,7 @@ $app->get('/', function ($req, $res, $args) {
 
 });
 
-$app->get('/util/rand/string', function () {
+$app->get('/util/rand/string', function ($req, $res, $args) {
 
 	$length = 20;
     $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
