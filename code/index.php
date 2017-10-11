@@ -4,6 +4,21 @@ require 'vendor/autoload.php';
 
 $app = new \Slim\Slim();
 
+$app->get('/', function ($req, $res, $args) {
+
+    $data = [
+                "string" => "Load-balancer health check OK",
+            ];
+
+    $body = json_encode($data,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+    $modres = $res->withStatus(200)
+                  ->withHeader("Content-Type","application/json")
+                  ->write($body);
+                  
+    return $modres;
+
+});
+
 $app->get('/util/rand/string', function () {
 
 	$length = 20;
@@ -17,7 +32,17 @@ $app->get('/util/rand/string', function () {
     for ($i = 0; $i < $length; ++$i) {
         $str .= $keyspace[random_int(0, $max)];
     }
-    echo $str;
+
+    $data = [
+                "string" => $str,
+            ];
+
+    $body = json_encode($data,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+    $modres = $res->withStatus(200)
+                  ->withHeader("Content-Type","application/json")
+                  ->write($body);
+
+    return $modres;
     
 });	
 
