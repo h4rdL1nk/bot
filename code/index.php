@@ -20,6 +20,7 @@ $app->get('/', function ($req, $res, $args) {
 
 });
 
+
 $app->get('/util/rand/string', function ($req, $res, $args) {
 
 	$length = 20;
