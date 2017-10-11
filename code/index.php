@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 
 $app = new \Slim\Slim();
 
+
 $app->get('/', function ($req, $res, $args) {
 
     $data = [
@@ -14,7 +15,7 @@ $app->get('/', function ($req, $res, $args) {
     $modres = $res->withStatus(200)
                   ->withHeader("Content-Type","application/json")
                   ->write($body);
-                  
+
     return $modres;
 
 });
