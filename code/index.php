@@ -20,32 +20,35 @@ $app->get('/', function ($req, $res, $args) {
 
 });
 
+$app->group('/api', function () {
+    $this->group('/util', function () {
+        $this->get('/rand/string', function ($req, $res, $args) {
 
-$app->get('/util/rand/string', function ($req, $res, $args) {
+        	$length = 20;
+            $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_$!%@';
 
-	$length = 20;
-    $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $str = '';
+            $max = mb_strlen($keyspace, '8bit') - 1;
+            if ($max < 1) {
+                throw new Exception('$keyspace must be at least two characters long');
+            }
+            for ($i = 0; $i < $length; ++$i) {
+                $str .= $keyspace[random_int(0, $max)];
+            }
 
-    $str = '';
-    $max = mb_strlen($keyspace, '8bit') - 1;
-    if ($max < 1) {
-        throw new Exception('$keyspace must be at least two characters long');
-    }
-    for ($i = 0; $i < $length; ++$i) {
-        $str .= $keyspace[random_int(0, $max)];
-    }
+            $data = [
+                        "string" => $str,
+                    ];
 
-    $data = [
-                "string" => $str,
-            ];
+            $body = json_encode($data,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+            $modres = $res->withStatus(200)
+                          ->withHeader("Content-Type","application/json")
+                          ->write($body);
 
-    $body = json_encode($data,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-    $modres = $res->withStatus(200)
-                  ->withHeader("Content-Type","application/json")
-                  ->write($body);
-
-    return $modres;
-    
-});	
+            return $modres;
+            
+        });	
+    });
+}); 
 
 $app->run();
