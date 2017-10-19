@@ -7,7 +7,7 @@ pipeline{
         stage('Build'){
             steps{
                 sh script: """
-                    ls -lrt
+                    docker build -t test .
                 """,returnStdout: true
             }
         }
