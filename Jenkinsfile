@@ -43,5 +43,18 @@ pipeline{
                     """
             }
         }
+        stage('Push image to AWS') {
+            steps{
+                script{
+                    def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                    awsEcrImg = dockerPushImageAws([
+                        awsRegion: "eu-west-1",
+                        awsCredId: "aws-inftel-admin",
+                        localImageTag: "jenkins-${JOB_NAME}-${BUILD_NUMBER}-img",
+                        pushImageTag: "bot:${shortCommit}"
+                    ])  
+                }
+            }
+        }
     }
 }
