@@ -47,10 +47,10 @@ pipeline{
             steps{
                 script{
 
-                    def commitHash = sh(
-                        returnStdout: true, 
-                        script: "git log -n 1 --pretty=format:'%H'"
-                        ).trim()
+                    def commitHash = getGitValue([
+                        param: "longHash",
+                        dir: ""
+                    ])
 
                     awsEcrImg = dockerPushImageAws([
                         awsRegion: "eu-west-1",
