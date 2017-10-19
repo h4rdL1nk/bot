@@ -6,9 +6,11 @@ pipeline{
     stages{
         stage('Build'){
             steps{
-                sh script: """
-                    docker build -t test .
-                """,returnStdout: true
+                script{
+                    sh script: """
+                        docker build -t test .
+                    """, returnStdout: true
+                }
             }
         }
     }
