@@ -10,9 +10,11 @@ pipeline{
                 sh script: """
                     #!/bin/bash
 
+                    set +x 
+
                     docker build -t test .
                 
-                """, returnStdout: true
+                """
             }
         }
     }
