@@ -2,6 +2,8 @@
 
 @Library('standardLibraries') _
 
+def awsEcrImg = ''
+
 pipeline{
     agent any
 
@@ -62,5 +64,42 @@ pipeline{
                 }
             }
         }
+        stage('Deploy application to AWS'){
+            steps{
+                script{
+
+                    def gitBranch = getGitValue([
+                        param: "currentBranch",
+                        dir: ""
+                    ])
+
+                    switch(gitBranch){
+                        case 'master':
+                            awsAppEnv = 'pro'
+                            break
+                        case ['testing','pre']:
+                            awsAppEnv = 'pre'
+                            break    
+                        default: 
+                            awsAppEnv = 'pre'
+                            break     
+                    }
+
+                    echo "Deploying image: ${awsEcrImg}"
+
+                    awsEcsDeployApp([
+                        awsRegion: "eu-west-1",
+                        awsCredId: "aws-inftel-admin",
+                        ecsClusterRegex: "^.*/CL.*-${awsAppEnv}\$",
+                        ecsServiceRegex: "^.*/SVC-bot",
+                        awsEcrImg: "${awsEcrImg}",
+                        awsAppEnv: "${awsAppEnv}",
+                        awsAppName: "bot",
+                        deployTimeout: "120"
+                    ])   
+                }    
+            }
+        }
+    }
     }
 }
