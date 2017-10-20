@@ -85,8 +85,6 @@ pipeline{
                             break     
                     }
 
-                    echo "Deploying image: ${awsEcrImg}"
-
                     awsEcsDeployApp([
                         awsRegion: "eu-west-1",
                         awsCredId: "aws-inftel-admin",
@@ -96,10 +94,10 @@ pipeline{
                         awsAppEnv: "${awsAppEnv}",
                         awsAppName: "bot",
                         deployTimeout: "120"
-                    ])   
+                    ])
+
                 }    
             }
         }
-    }
     }
 }
