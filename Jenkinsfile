@@ -97,7 +97,6 @@ pipeline{
                         awsAppName: "bot",
                         deployTimeout: "120"
                     ])
-
                 }    
             }
         }
