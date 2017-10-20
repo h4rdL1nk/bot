@@ -5,8 +5,9 @@
 def awsEcrImg = ''
 
 pipeline{
-    agent any
-
+    agent {
+        label 'workeraws'
+    }
     stages{
         stage('Docker image build'){
             steps{
