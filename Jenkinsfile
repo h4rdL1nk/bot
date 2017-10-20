@@ -2,6 +2,7 @@
 
 @Library('standardLibraries') _
 
+def awsAppEnv = ''
 def awsEcrImg = ''
 
 pipeline{
