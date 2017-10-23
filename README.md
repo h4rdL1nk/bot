@@ -1,4 +1,4 @@
-#Build and run container
+#Build and run container (local)
 
 docker build --no-cache -t bot build
 
