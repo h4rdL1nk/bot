@@ -50,12 +50,10 @@ pipeline{
         stage('Push image to AWS') {
             steps{
                 script{
-
                     def commitHash = getGitValue([
                         param: "longHash",
                         dir: ""
                     ])
-
                     awsEcrImg = dockerPushImageAws([
                         awsRegion: "eu-west-1",
                         awsCredId: "aws-inftel-admin",
@@ -69,12 +67,10 @@ pipeline{
         stage('Deploy application to AWS'){
             steps{
                 script{
-
                     def gitBranch = getGitValue([
                         param: "currentBranch",
                         dir: ""
                     ])
-
                     switch(gitBranch){
                         case 'master':
                             awsAppEnv = 'pro'
@@ -86,7 +82,6 @@ pipeline{
                             awsAppEnv = 'pre'
                             break     
                     }
-
                     awsEcsDeployApp([
                         awsRegion: "eu-west-1",
                         awsCredId: "aws-inftel-admin",
@@ -96,8 +91,7 @@ pipeline{
                         awsAppEnv: "${awsAppEnv}",
                         awsAppName: "bot",
                         deployTimeout: "120"
-                    ])
-                    
+                    ])                
                 }    
             }
         }
