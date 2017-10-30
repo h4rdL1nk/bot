@@ -104,21 +104,21 @@ pipeline{
     }
     post {
         always {
+            script {
+                def commitMail = getGitValue([
+                            param: "authorMail",
+                            dir: ""
+                    ])
 
-            def commitMail = getGitValue([
-                        param: "authorMail",
-                        dir: ""
-                ])
-
-            emailext(
-                    from: "jenkins-ci@app.madisonmk.com",
-                    to: "${commitMail}",
-                    mimeType: 'text/html',
-                    subject: "[${currentBuild.currentResult}] ${BUILD_DISPLAY_NAME} ${JOB_NAME}",
-                    body: "<br>Finalizado ${JOB_NAME} ${BUILD_NUMBER}<br>Nodo:${NODE_NAME}",
-                    attachLog: true
-            )
-
+                emailext(
+                        from: "jenkins-ci@app.madisonmk.com",
+                        to: "${commitMail}",
+                        mimeType: 'text/html',
+                        subject: "[${currentBuild.currentResult}] ${BUILD_DISPLAY_NAME} ${JOB_NAME}",
+                        body: "<br>Finalizado ${JOB_NAME} ${BUILD_NUMBER}<br>Nodo:${NODE_NAME}",
+                        attachLog: true
+                )
+            }
         }
     }
 }
