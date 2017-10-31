@@ -12,11 +12,11 @@ pipeline{
     stages{
         stage('Docker image build'){
             steps{
-                sh script: """
-                    #!/bin/bash
-                    set +x 
-                    docker build -t jenkins-${JOB_NAME}-${BUILD_NUMBER}-img --no-cache .
-                """
+                dockerBuildImage([
+                    tag: "jenkins-${JOB_NAME}-${BUILD_NUMBER}-img",
+                    options: "",
+                    buildDir: "."
+                ])
             }
         }
         stage('Docker image tests') {
