@@ -97,7 +97,7 @@ pipeline{
         }
     }
     post {
-        always {
+        failure {
             script {
                 def commitMail = getGitValue([
                             param: "authorMail",
