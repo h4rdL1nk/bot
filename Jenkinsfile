@@ -12,11 +12,13 @@ pipeline{
     stages{
         stage('Docker image build'){
             steps{
-                dockerBuildImage([
-                    tag: "jenkins-${JOB_NAME}-${BUILD_NUMBER}-img",
-                    options: "",
-                    buildDir: "."
-                ])
+                script{
+                    dockerBuildImage([
+                        tag: "jenkins-${JOB_NAME}-${BUILD_NUMBER}-img",
+                        options: "",
+                        buildDir: "."
+                    ])
+                }
             }
         }
         stage('Docker image tests') {
