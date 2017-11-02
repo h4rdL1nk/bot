@@ -121,7 +121,7 @@ pipeline{
                         dir: ""
                     ])
 
-                echo "${commitHash} <${commitMail}> ${commitDate}"
+                echo "${commitHash} <${commitMail}> ${commitDate} "
 
                 emailext(
                         from: "jenkins-ci@app.madisonmk.com",
