@@ -121,14 +121,14 @@ pipeline{
                         dir: ""
                     ])
 
-                echo "${commitHash} <${commitMail}> ${commitDate} ${commitMsg}"
+                echo "${commitHash} <${commitMail}> ${commitDate}"
 
                 emailext(
                         from: "jenkins-ci@app.madisonmk.com",
                         to: "${commitMail}",
                         mimeType: 'text/html',
                         subject: "[${currentBuild.currentResult}] ${BUILD_DISPLAY_NAME} ${JOB_NAME}",
-                        body: "<br>Finalizado ${JOB_NAME} ${BUILD_NUMBER}<br>Nodo:${NODE_NAME}<br>Commit: ${comitHash}<br>Fecha: ${commitDate}<br>Message: ${commitMsg}",
+                        body: "<br>Finalizado ${JOB_NAME} ${BUILD_NUMBER}<br>Nodo:${NODE_NAME}<br>Commit: ${comitHash}<br>Fecha: ${commitDate}",
                         attachLog: true
                 )
             }
