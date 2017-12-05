@@ -15,7 +15,7 @@ pipeline {
         }
     }
     post{
-        success{
+        always{
             deleteDir()
         }
     }
