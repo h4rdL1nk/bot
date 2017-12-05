@@ -9,7 +9,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'openshift-starter-token', variable: 'OS_TOKEN')]){
                     sh script: """
-                        echo $OS_TOKEN
+                        oc login https://api.starter-us-west-1.openshift.com --token=$OS_TOKEN
                     """
                 }
             }
