@@ -16,12 +16,14 @@ def main():
     #Declare handlers
     start_handler = CommandHandler('start', start)
     whoami_handler = CommandHandler('whoami', whoami)
+    video_handler = CommandHandler('video', video)
     echo_handler = MessageHandler(Filters.text, echo)
     unknown_handler = MessageHandler(Filters.command, unknown)
 
     #Start handlers
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(whoami_handler)
+    dispatcher.add_handler(video_handler)
     dispatcher.add_handler(echo_handler)
     dispatcher.add_handler(unknown_handler)
 
@@ -33,6 +35,10 @@ def loggingSetup():
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         level=logging.INFO
     )
+
+def video (bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text="VIDEO")
+    bot.send_video(chat_id=update.message.chat_id, video=open('/app/video/example/sample.mp4', 'rb'), supports_streaming=True)
 
 def whoami(bot, update):
     r = requests.get('http://ifconfig.co/json')
