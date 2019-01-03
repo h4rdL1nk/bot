@@ -103,7 +103,7 @@ def updates(bot, update):
         count += 1
         bot.send_message(chat_id=update.message.chat_id, text=event)
         print("Found event with TS [" + str(event[5]) + "]") 
-        bot.send_video(chat_id=update.message.chat_id, video=open(event[1], 'rb'), supports_streaming=False)
+        bot.send_video(chat_id=update.message.chat_id, video=open(event[1], 'rb'), supports_streaming=True)
         print("Updating event [" + str(event[5]) + "]")
         update_query = "UPDATE security SET event_ack = 1 WHERE event_time_stamp == '" + str(event[5]) + "';"
         print("Executing query [" + update_query + "]")
