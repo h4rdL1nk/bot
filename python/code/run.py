@@ -2,6 +2,7 @@ import logging
 import os
 import requests
 import json
+import sqlite3
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -16,14 +17,14 @@ def main():
     #Declare handlers
     start_handler = CommandHandler('start', start)
     whoami_handler = CommandHandler('whoami', whoami)
-    video_handler = CommandHandler('video', video)
+    video_handler = CommandHandler('updates', updates)
     echo_handler = MessageHandler(Filters.text, echo)
     unknown_handler = MessageHandler(Filters.command, unknown)
 
     #Start handlers
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(whoami_handler)
-    dispatcher.add_handler(video_handler)
+    dispatcher.add_handler(updates_handler)
     dispatcher.add_handler(echo_handler)
     dispatcher.add_handler(unknown_handler)
 
@@ -36,9 +37,21 @@ def loggingSetup():
         level=logging.INFO
     )
 
-def video (bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="VIDEO")
-    bot.send_video(chat_id=update.message.chat_id, video=open('/app/video/example/sample.mp4', 'rb'), supports_streaming=True)
+def updates (bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text="Looking for new updates ...")
+
+    conn = sqlite3.connect('/data/motion/db/motion.sqlite')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM security WHERE event_ack = 0')
+
+    for reg in cursor:
+        bot.send_message(chat_id=update.message.chat_id, text=reg)
+        print(reg)
+
+    #bot.send_video(chat_id=update.message.chat_id, video=open('/app/video/example/sample.mp4', 'rb'), supports_streaming=True)
+
+    cursor.close()
+    conn.close()
 
 def whoami(bot, update):
     r = requests.get('http://ifconfig.co/json')
