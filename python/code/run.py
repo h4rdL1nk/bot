@@ -38,33 +38,45 @@ def main():
 
 def motionStart(bot, update):
     running = 0
+    startCmd = "motion -b"
+
     for proc in psutil.process_iter():
       if proc.name() == "motion":
         running = 1
+        pid = proc.pid
 
     if running != 1:
       print("Motion not running, starting") 
-      proc = subprocess.Popen("motion -b", stdout=subprocess.PIPE, shell=True)
+      proc = subprocess.Popen(startCmd, stdout=subprocess.PIPE, shell=True)
       (out, err) = proc.communicate()
       proc_status = proc.wait()
-      print("Command exit code: " + proc_status)
-      bot.send_message(chat_id=update.message.chat_id, text="Motion started successfully") 
+      print("Command exit code: " + str(proc_status))
+      if proc_status == 0:
+        bot.send_message(chat_id=update.message.chat_id, text="Motion started successfully") 
+      else:
+        bot.send_message(chat_id=update.message.chat_id, text="Motion start error for command [" + startCmd + "] Error: " + err)
     else:
-      print("Motion already running")
-      bot.send_message(chat_id=update.message.chat_id, text="Motion already running")
+      print("Motion already running with pid: " + str(pid))
+      bot.send_message(chat_id=update.message.chat_id, text="Motion already running with pid: " + str(pid))
 
 def motionStop(bot, update):
     running = 0
+    stopCmd = "killall motion"
+
     for proc in psutil.process_iter():
       if proc.name() == "motion":
         running = 1
+        pid = proc.pid
 
     if running == 1:
-      proc = subprocess.Popen("killall motion", stdout=subprocess.PIPE, shell=True)
+      proc = subprocess.Popen(stopCmd, stdout=subprocess.PIPE, shell=True)
       (out, err) = proc.communicate()
       proc_status = proc.wait()
-      print("Command exit code: " + proc_status)
-      bot.send_message(chat_id=update.message.chat_id, text="Motion stopped successfully")
+      print("Command exit code: " + str(proc_status))
+      if proc_status == 0:
+        bot.send_message(chat_id=update.message.chat_id, text="Motion stopped successfully. Killed process with pid: " + str(pid))
+      else:
+        bot.send_message(chat_id=update.message.chat_id, text="Motion stop error for command [" + stopCmd + "] Error: " + err)
     else:
       print("Motion is not running")
       bot.send_message(chat_id=update.message.chat_id, text="Motion is not running")
