@@ -1,6 +1,6 @@
 FROM python:2-alpine3.7
 
-RUN apk -U add --virtual build-deps musl-dev libffi-dev openssl-dev gcc
+RUN apk -U add docker --virtual build-deps musl-dev libffi-dev openssl-dev gcc
 
 COPY requirements.txt .
 
