@@ -1,0 +1,11 @@
+FROM alpine:3.8
+
+RUN sed -i -e 's/v[[:digit:]]\.[[:digit:]]/edge/g' /etc/apk/repositories \
+    && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+
+RUN apk update && apk add motion
+
+RUN mkdir -p /config/motion
+COPY config/motion/motion.conf /config/motion
+
+ENTRYPOINT ["motion","-c","/config/motion/motion.conf","-d","7","-m"]
