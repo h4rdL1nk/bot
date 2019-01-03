@@ -17,7 +17,7 @@ def main():
     #Declare handlers
     start_handler = CommandHandler('start', start)
     whoami_handler = CommandHandler('whoami', whoami)
-    video_handler = CommandHandler('updates', updates)
+    updates_handler = CommandHandler('updates', updates)
     echo_handler = MessageHandler(Filters.text, echo)
     unknown_handler = MessageHandler(Filters.command, unknown)
 
@@ -43,12 +43,14 @@ def updates (bot, update):
     conn = sqlite3.connect('/data/motion/db/motion.sqlite')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM security WHERE event_ack = 0')
+    unack_events = cursor.fetchall()
 
-    for reg in cursor:
-        bot.send_message(chat_id=update.message.chat_id, text=reg)
-        print(reg)
-
-    #bot.send_video(chat_id=update.message.chat_id, video=open('/app/video/example/sample.mp4', 'rb'), supports_streaming=True)
+    for event in unack_events:
+      if event[3] == 8:
+        bot.send_message(chat_id=update.message.chat_id, text=event)
+        print(event)
+        bot.send_video(chat_id=update.message.chat_id, video=open(event[1], 'rb'), supports_streaming=True)
+        #cursor.execute('UPDATE security SET event_ack = 0 WHERE time_stamp = 20190103010953')
 
     cursor.close()
     conn.close()
