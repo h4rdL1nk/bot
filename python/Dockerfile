@@ -12,7 +12,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY code/ /app
 
-RUN mkdir -p /app/video/example
-COPY sample.mp4 /app/video/example/sample.mp4
-
 ENTRYPOINT ["python","/app/run.py"]
