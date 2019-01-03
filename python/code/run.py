@@ -89,6 +89,8 @@ def loggingSetup():
     )
 
 def updates(bot, update):
+    count = 0
+
     bot.send_message(chat_id=update.message.chat_id, text="Looking for new updates ...")
 
     conn = sqlite3.connect('/data/motion/db/motion.sqlite')
@@ -98,6 +100,7 @@ def updates(bot, update):
 
     for event in unack_events:
       if event[3] == 8:
+        count += 1
         bot.send_message(chat_id=update.message.chat_id, text=event)
         print("Found event with TS [" + str(event[5]) + "]") 
         bot.send_video(chat_id=update.message.chat_id, video=open(event[1], 'rb'), supports_streaming=False)
@@ -105,6 +108,9 @@ def updates(bot, update):
         update_query = "UPDATE security SET event_ack = 1 WHERE event_time_stamp == '" + str(event[5]) + "';"
         print("Executing query [" + update_query + "]")
         cursor.execute(update_query)
+
+    if count == 0:
+      bot.send_message(chat_id=update.message.chat_id, text="No updates found")
 
     cursor.close()
     conn.commit()
