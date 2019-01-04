@@ -1,6 +1,9 @@
-FROM python:2-alpine3.7
+FROM python:3.7.2-alpine
 
-RUN apk -U add docker --virtual build-deps musl-dev libffi-dev openssl-dev gcc
+RUN sed -i -e 's/v[[:digit:]]\.[[:digit:]]/edge/g' /etc/apk/repositories \
+    && echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+
+RUN apk update && apk upgrade && apk add motion && apk add --virtual build-deps openssl-dev musl-dev libffi-dev gcc
 
 COPY requirements.txt .
 

@@ -1,0 +1,5 @@
+FROM scratch
+
+ADD rootfs/alpine-minirootfs-3.8.2-armhf.tar /
+
+RUN /bin/ls -lrt /

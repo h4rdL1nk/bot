@@ -20,8 +20,8 @@ def main():
     start_handler = CommandHandler('start', start)
     whoami_handler = CommandHandler('whoami', whoami)
     updates_handler = CommandHandler('updates', updates)
-    motion_start_handler = CommandHandler('motionStart', motionStart)
-    motion_stop_handler = CommandHandler('motionStop', motionStop)
+    motion_start_handler = CommandHandler('motionstart', motionStart)
+    motion_stop_handler = CommandHandler('motionstop', motionStop)
     echo_handler = MessageHandler(Filters.text, echo)
     unknown_handler = MessageHandler(Filters.command, unknown)
 
