@@ -119,8 +119,6 @@ def updates(bot, update):
 def whoami(bot, update):
     r = requests.get('http://ifconfig.co/json')
 
-    bot.send_message(chat_id=update.message.chat_id, text="WHO")
-
     if r.status_code == 200:
         data = r.json()
         bot.send_message(chat_id=update.message.chat_id, text=data['city'] + "(" + data['country'] + ") " + data['ip'])
